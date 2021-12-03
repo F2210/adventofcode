@@ -1,6 +1,8 @@
 with open('input/3.txt', 'r') as file:
     bins = file.readlines()
 
+    countdict = {}
+
     gfilterdict = {}
     efilterdict = {}
 
