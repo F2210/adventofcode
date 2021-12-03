@@ -1,19 +1,5 @@
 with open('input/3.txt', 'r') as file:
     bins = file.readlines()
-    countdict = {
-        0: 0,
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0,
-        6: 0,
-        7: 0,
-        8: 0,
-        9: 0,
-        10: 0,
-        11: 0,
-    }
 
     gfilterdict = {}
     efilterdict = {}
@@ -25,6 +11,9 @@ with open('input/3.txt', 'r') as file:
     for bin in bins:
         newbins.append(bin.strip())
     bins = newbins
+
+    for value in range(0, len(bins[0])):
+        countdict[value] = 0
 
     for bin in bins:
         for value in range(0, len(bin)):
@@ -55,12 +44,8 @@ with open('input/3.txt', 'r') as file:
     # when least common is 1: add all numbers with one in that place to the list
     # when equal amount of 1 and 0: add ones with 0 in that place to list
 
-    ebinarydict = {}
-    gbinarydict = {}
-    oxyfilterlist = bins
     co2filterlist = bins
 
-    co2string = ""
     for deterindex in range(0, len(ebinary)):
 
         co2rating[deterindex] = []
@@ -69,17 +54,24 @@ with open('input/3.txt', 'r') as file:
             co2binsum += int(bin[deterindex])
         positive = co2binsum < (len(co2filterlist) / 2)
         co2matchingvalue = str(int(positive))
-        co2string += co2matchingvalue
         for bin in co2filterlist:
             if bin[deterindex] == co2matchingvalue:
                 co2rating[deterindex].append(bin)
 
         co2filterlist = co2rating[deterindex]
 
+    count = {}
+    for key, list in co2rating.items():
+        count[key] = len(list)
+        if len(list) == 1:
+            co2result = list[0]
+
     # second oxy
     # when most common is 1: add all numbers with one in that place to the list
     # when equal amount of 1 and 0: add ones with 1 in that place to the list
-    oxystring = ""
+
+    oxyfilterlist = bins
+
     for deterindex in range(0, len(ebinary)):
 
         oxyrating[deterindex] = []
@@ -88,7 +80,6 @@ with open('input/3.txt', 'r') as file:
             oxybinsum += int(bin[deterindex])
         positive = oxybinsum >= (len(oxyfilterlist) / 2)
         oxymatchingvalue = str(int(positive))
-        oxystring += oxymatchingvalue
         for bin in oxyfilterlist:
             if bin[deterindex] == oxymatchingvalue:
                 oxyrating[deterindex].append(bin)
@@ -101,11 +92,7 @@ with open('input/3.txt', 'r') as file:
         if len(list) == 1:
             oxyresult = list[0]
 
-    count = {}
-    for key, list in co2rating.items():
-        count[key] = len(list)
-        if len(list) == 1:
-            co2result = list[0]
+
 
     print("result _ first exercise", int(e, 2) * int(g, 2))
     print("result _ second exercise", int("0b" + str(co2result), 2) * int("0b" + str(oxyresult), 2))
