@@ -30,14 +30,10 @@ with open('input/3.txt', 'r') as file:
         for value in range(0, len(bin)):
             countdict[value] += int(bin[value])
 
-    print(countdict)
-
     totallines = len(bins)
 
     e = "0b"
     g = "0b"
-    gdict = {}
-    edict = {}
     for key, value in countdict.items():
         if key == 12:
             pass
@@ -45,13 +41,9 @@ with open('input/3.txt', 'r') as file:
             if value >= (totallines/2):
                 e += "0"
                 g += "1"
-                gdict[key] = "1"
-                edict[key] = "0"
             else:
                 e += "1"
                 g += "0"
-                gdict[key] = "0"
-                edict[key] = "1"
 
     gbinary = g[2:]
     ebinary = e[2:]
@@ -103,27 +95,17 @@ with open('input/3.txt', 'r') as file:
 
         oxyfilterlist = oxyrating[deterindex]
 
-    print(oxystring)
-
     count = {}
     for key, list in oxyrating.items():
         count[key] = len(list)
         if len(list) == 1:
             oxyresult = list[0]
-    print(count)
 
     count = {}
     for key, list in co2rating.items():
         count[key] = len(list)
         if len(list) == 1:
             co2result = list[0]
-    print(count)
 
-    print("co2", int("0b" + str(co2result), 2))
-    print("oxy", int("0b" + str(oxyresult), 2))
-    print("result", int("0b" + str(co2result), 2) * int("0b" + str(oxyresult), 2))
-
-    print("epsilon", int(e, 2))
-    print("gamma", int(g, 2))
-
-    print("result", int(e, 2) * int(g, 2))
+    print("result _ first exercise", int(e, 2) * int(g, 2))
+    print("result _ second exercise", int("0b" + str(co2result), 2) * int("0b" + str(oxyresult), 2))
