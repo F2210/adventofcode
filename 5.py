@@ -44,9 +44,3 @@ with open('input/5.txt', 'r') as file:
 
     print(np.count_nonzero(array))
 
-# x1, y1 x2, y2
-# 5,  1  1,  5 (x1 == y2 and y1 == x2)
-# 1,  1  5,  5 (x1 == y1 and y1 == y2)
-# 5,  5  1,  1
-# 1,  5  5,  1 (x1 == y2 and y1 == x2)
-

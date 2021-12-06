@@ -2,13 +2,12 @@ import numpy as np
 
 def Bingo(board):
     for x in range(5):
-        row_bingo = np.count_nonzero(board[x:, ])
-        column_bingo = np.count_nonzero(board[:, x])
-        if not row_bingo or not column_bingo:
-            print(board)
-            print(number)
-            print(np.sum(board))
-            return True
+        for row in np.count_nonzero(board == -1, axis=1):
+            if row == 5:
+                return True
+        for row in np.count_nonzero(board == -1, axis=0):
+            if row == 5:
+                return True
 
 with open('input/4.txt', 'r') as file:
 
@@ -27,13 +26,28 @@ with open('input/4.txt', 'r') as file:
             board.append(row)
 
     nobingo = True
+    stop = False
+    wonboards = []
     for number in drawnumbers:
         bingolist = []
         counter = 0
         for board in boards:
-            boards[counter] = np.where(boards[counter] == number, 0, boards[counter])
+            boards[counter] = np.where(boards[counter] == number, -1, boards[counter])
 
             if Bingo(boards[counter]):
-                boards.pop(counter)
-            else:
-                counter += 1
+                wonboards.append(counter)
+                if len(wonboards) == 99:
+                    lastboard = boards[counter]
+                    lastnumber = number
+                    stop = True
+                # boards.pop(counter)
+            counter += 1
+
+            if stop:
+                break
+        if stop:
+            break
+
+    print(lastboard)
+    print(np.sum(lastboard))
+    print(lastnumber)
