@@ -6,6 +6,7 @@ def Bingo(board):
         column_bingo = np.count_nonzero(board[:, x])
         if not row_bingo or not column_bingo:
             print(board)
+            print(number)
             print(np.sum(board))
             return True
 
@@ -33,9 +34,6 @@ with open('input/4.txt', 'r') as file:
             boards[counter] = np.where(boards[counter] == number, 0, boards[counter])
 
             if Bingo(boards[counter]):
-                print(len(boards))
                 boards.pop(counter)
-                print(number)
-                print(len(boards))
             else:
                 counter += 1

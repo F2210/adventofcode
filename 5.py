@@ -24,22 +24,29 @@ with open('input/5.txt', 'r') as file:
             for i in range(int(math.fabs(x2 - x1)+1)):
                 array[i+min(x2, x1), y1] += 1
 
-        elif x2 == y1 and x1 == y2:
-            diagdelta = int(math.fabs(y2 - y1)) + 1
+        elif int(math.fabs(x2 - x1)) == int(math.fabs(y2 - y1)):
 
-            (xstart, ystart) = (x1, y1) if x1 < x2 else (x2, y2)
+            xdir = 1
+            ydir = 1
+            if y2 < y1:
+                ydir = -1
+            if x2 < x1:
+                xdir = -1
 
-            for i in range(diagdelta):
-                array[xstart + i, ystart + i] += 1
+            for i in range(int(math.fabs(x2 - x1))+1):
+                xi = i * xdir
+                yi = i * ydir
 
-        elif x1 == y1 and x2 == y2:
-            diagdelta = int(math.fabs(x1 - x2)) + 1
+                array[xi+x1, yi+y1] += 1
 
-            (ystart, xstart) = (y1, x1) if y1 < y2 else (y2, x2)
-
-            for i in range(diagdelta):
-                array[xstart + i, ystart + i] += 1
 
     array = np.where(array < 2, 0, array)
 
     print(np.count_nonzero(array))
+
+# x1, y1 x2, y2
+# 5,  1  1,  5 (x1 == y2 and y1 == x2)
+# 1,  1  5,  5 (x1 == y1 and y1 == y2)
+# 5,  5  1,  1
+# 1,  5  5,  1 (x1 == y2 and y1 == x2)
+
