@@ -1,18 +1,24 @@
 import numpy as np
+import sys
 
+np.set_printoptions(threshold=sys.maxsize)
 
-def isSafe(i, j, visited):
+def canlook(i, j, visited):
     return (i >= 0 and i < len(rows) and j >= 0 and j < len(rows[0]) and not visited[i][j] and coordinates[i][j])
 
-def DFS(i, j, visited):
-    rowNbr = [-1, -1, -1, 0, 0, 1, 1, 1]
-    colNbr = [-1, 0, 1, -1, 1, -1, 0, 1]
+def dfs(i, j, visited):
+    row_nbr = [-1, 0, 0, 1]
+    col_nbr = [0, 1, -1, 0]
 
     visited[i][j] = True
+    if coordinates[i][j] > 0:
+        basin[i][j] = True
 
-    for k in range(8):
-        if isSafe(i + rowNbr[k], j + colNbr[k], visited):
-            DFS(i + rowNbr[k], j + colNbr[k], visited)
+    checkarray[i][j] = basin[i][j]
+
+    for k in range(4):
+        if canlook(i + row_nbr[k], j + col_nbr[k], visited):
+            dfs(i + row_nbr[k], j + col_nbr[k], visited)
 
 with open('input/9.txt', 'r') as file:
 
@@ -61,17 +67,17 @@ with open('input/9.txt', 'r') as file:
 
     basincount = []
 
-    coordinates = np.where(coordinates == 9, 0, coordinates)
+    coordinates = coordinates + 1
+    coordinates = np.where(coordinates == 10, 0, coordinates)
+    checkarray = coordinates
+    countlist = []
+    checkarray = np.array([[0 for x in row] for row in rows])
+    for ylow, xlow in lowlist:
+        visited = coordinates < -1
+        basin = coordinates < -1
+        dfs(xlow, ylow, visited)
+        np.set_printoptions(linewidth=750)
+        countlist.append(np.count_nonzero(basin))
 
-    visited = coordinates < -1
-
-    count = 0
-    for i in range(len(row)):
-        for j in range(len(row[0])):
-            if visited[i][j] == False and coordinates[i][j] == 1:
-                DFS(i, j, visited)
-                count += 1
-
-    print(count)
-
+    print(np.product(sorted(countlist)[-3:]))
     print(lowcount)
