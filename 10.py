@@ -38,7 +38,7 @@ with open('input/10.txt', 'r') as file:
     print(score)
 
     scores = []
-    for line in goodlines[-1:]:
+    for line in goodlines:
         score = 0
         for char in line[::-1]:
             score *= 5
