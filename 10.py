@@ -35,8 +35,6 @@ with open('input/10.txt', 'r') as file:
         if notfound:
             goodlines.append(result.strip())
 
-    print(score)
-
     scores = []
     for line in goodlines[-1:]:
         score = 0
